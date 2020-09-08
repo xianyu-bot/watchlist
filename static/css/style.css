@@ -41,6 +41,10 @@ footer {
     height: 100px;
 }
 
+.nav-menu {
+    display: inline;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;

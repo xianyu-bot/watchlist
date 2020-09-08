@@ -23,7 +23,9 @@
     </h2>
     <nav>
         <ul>
-            <li><a href="{{url_for('index')}}">Home</a></li>
+            <li>
+                <a href="{{url_for('index')}}" class="nav-menu">Home</a><a href="{{url_for('login')}}" class="nav-menu">Login</a>
+            </li>
         </ul>
     </nav>
     {% block content %}{% endblock%}

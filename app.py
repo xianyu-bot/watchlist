@@ -82,6 +82,7 @@ def admin(username, password):
         user = User(username=username, name='Admin')
         user.set_password(password)
         db.session.add(user)
+        
     db.session.commit()
     click.echo('Done.')
     
