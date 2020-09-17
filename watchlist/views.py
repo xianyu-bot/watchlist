@@ -2,7 +2,7 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_user, login_required, logout_user, current_user
 
 from watchlist import app, db
-from watchlist.models import User, Movie
+from watchlist.models import User, Movie,MessageBoard
 
 @app.route('/')
 def hello():
@@ -105,3 +105,16 @@ def logout():
     logout_user()
     flash('Goodbye.')
     return redirect(url_for('index'))
+
+@app.route('/messageboard',methods=['GET','POST'])
+def message_board():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        message_content = request.form.get('message_content')
+        db.create_all()    
+        if username and message_content:
+            message = MessageBoard(username=username,message_content=message_content)
+            db.session.add(message)
+            db.session.commit()
+            flash('Message add success!')
+    return render_template('messageboard.html')

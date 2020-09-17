@@ -40,7 +40,8 @@ def forge():
 def admin(username, password):
     # Create user.
     db.create_all()
-    user = User.query.first()
+    user = User.query.filter_by(username=username).first()
+
     if user is not None:
         click.echo('Updating user ...')
         # 数据写不进去是因为原来配置的是 user.name = username
@@ -48,7 +49,7 @@ def admin(username, password):
         user.set_password(password)
     else:
         click.echo('Creating user...')
-        user = User(username=username, name='Admin')
+        user = User(username=username, name=username)
         user.set_password(password)
         db.session.add(user)
         

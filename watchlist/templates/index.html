@@ -3,23 +3,23 @@
 {% if current_user.is_authenticated %}
 <form method="POST">
     Name <input type="text" name="title" autocomplete="off" required> Year <input type="text" name="year" autocomplete="off" required>
-    <input class="btn" type="submit" name="submit" value="Add">
+    <input class="btn-base" type="submit" name="submit" value="Add">
 </form>
 {% endif %}
 
 <ul class="movie-list">
     {% for movie in movies %}
-    <li>{{ movie.title }}-{{movie.year}}
+    <li>{{ movie.title }} - {{movie.year}}
         <span class="float-right">
             {% if current_user.is_authenticated %}
             <form action="{{ url_for('delete',movie_id=movie.id) }}" class="inline-form" method="POST">
-                <input type="submit" class="btn" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                <input type="submit" class="btn-base" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
             </form>
             {% endif %}
         </span>
         <span class="float-right">
             {% if current_user.is_authenticated %}
-            <a href="{{ url_for('edit',movie_id=movie.id )}}" class="btn">Edit</a>
+            <a href="{{ url_for('edit',movie_id=movie.id )}}" class="btn-base">Edit</a>
             {% endif %}
         </span>
         <span class="float-right">

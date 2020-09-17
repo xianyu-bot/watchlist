@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 from watchlist import db
 
@@ -21,3 +22,11 @@ class Movie(db.Model):
     title = db.Column(db.String(60))
     year = db.Column(db.String(4))
 
+
+
+class MessageBoard(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20),db.ForeignKey('user.username'))
+    message_content = db.Column(db.Text)
+    message_time = db.Column(db.DateTime,default=datetime.now)
+    
