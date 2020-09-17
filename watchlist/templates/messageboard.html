@@ -2,13 +2,15 @@
 <div id="app" class="container">
     <h3>留言板：</h3>
     <ul class="form-group">
-        <li class="list-group-item row" style="max-height: 300px;overflow: auto;">
-            <span class="col-sm-1">{{ username }}</span>
-            <span class="col-sm-1">{{ message_content }}</span>
-            <span class="col-sm-1">{{ message_time }}</span>
+        {% for message in messages%}
+        <li class="list-group-item row">
+            <span class="col-sm-1">{{ message.username }}</span>
+            <span class="col-sm-4">{{ message.message_content }}</span>
+            <span class="col-sm-2">{{ message.message_time }}</span>
             <button class="col-sm-1 btn btn-danger">删除</button>
             <button class="col-sm-1 btn btn-info">修改</button>
         </li>
+        {% endfor %}
     </ul>
 
     <br>

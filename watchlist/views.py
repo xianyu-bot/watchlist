@@ -117,4 +117,6 @@ def message_board():
             db.session.add(message)
             db.session.commit()
             flash('Message add success!')
-    return render_template('messageboard.html')
+
+    messages = MessageBoard.query.all()
+    return render_template('messageboard.html',messages=messages)
