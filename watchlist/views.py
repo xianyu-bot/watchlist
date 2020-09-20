@@ -2,7 +2,8 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_user, login_required, logout_user, current_user
 
 from watchlist import app, db
-from watchlist.models import User, Movie,MessageBoard
+from watchlist.models import User, Movie, MessageBoard
+
 
 @app.route('/')
 def hello():
@@ -58,6 +59,7 @@ def delete(movie_id):
     flash('Item deleted')
     return redirect(url_for('index'))
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -106,17 +108,27 @@ def logout():
     flash('Goodbye.')
     return redirect(url_for('index'))
 
-@app.route('/messageboard',methods=['GET','POST'])
+
+@app.route('/messageboard', methods=['GET', 'POST'])
 def message_board():
     if request.method == 'POST':
         username = request.form.get('username')
         message_content = request.form.get('message_content')
-        db.create_all()    
+        db.create_all()
         if username and message_content:
-            message = MessageBoard(username=username,message_content=message_content)
+            message = MessageBoard(username=username, message_content=message_content)
             db.session.add(message)
             db.session.commit()
             flash('Message add success!')
 
     messages = MessageBoard.query.all()
-    return render_template('messageboard.html',messages=messages)
+    return render_template('messageboard.html', messages=messages)
+
+@app.route('/messageboard/delete/<int:message_id>',methods=['POST'])
+def message_delete(message_id):
+    message = MessageBoard.query.get_or_404(message_id)
+    db.session.delete(message)
+    db.session.commit()
+    flash("该留言已删除")
+    # return redirect(url_for('函数名'))
+    return redirect(url_for('message_board'))
